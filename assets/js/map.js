@@ -42,7 +42,7 @@ $(document).ready(function() {
   })
 
   if (navigator.geolocation) {
-    getCurrentLocation();
+    // getCurrentLocation();
   }
 
 });
@@ -62,6 +62,7 @@ function successCallback(result) {
   var lat = result.coords.latitude;
   var lng = result.coords.longitude;
   var myLatLng = new google.maps.LatLng(lat, lng);
+  /*
   var mapOptions = {
     center: myLatLng,
     zoom: 16,
@@ -72,15 +73,16 @@ function successCallback(result) {
     disableDoubleClickZoom: true,
     mapTypeControl: false,
   }
-
+  */
   var map = new google.maps.Map($("#map").get(0), mapOptions);
 
+  /*
   // Add Marker
   new google.maps.Marker({
     position: myLatLng,
     map: map
   });
-
+  */
 }
 
 function errorCallback(error) {
