@@ -1,4 +1,4 @@
-var markersArray = [];
+var $markersArray = [];
 
 $(document).ready(function() {
   var marker;
@@ -25,10 +25,12 @@ $(document).ready(function() {
       // Add Marker
       marker = new google.maps.Marker({
         position: results[0].geometry.location,
-        map: map
+        map: map,
+        title: results[0].formatted_address,
+        icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
       });
 
-      markersArray.push(marker);
+      $markersArray.push(marker);
 
       // Reset Center and Zoom to Geocoded Location
       map.setCenter(results[0].geometry.location);
@@ -39,14 +41,16 @@ $(document).ready(function() {
         content: "This is: <h3>" + address + "</h3>"
       });
 
+      if (navigator.geolocation) {
+        getCurrentLocation();
+      }
+
     } else {
       alert(status)
     }
   })
 
-  if (navigator.geolocation) {
-    // getCurrentLocation();
-  }
+
 
 });
 
@@ -62,13 +66,11 @@ function getCurrentLocation() {
 }
 
 function successCallback(result) {
+
   var lat = result.coords.latitude;
   var lng = result.coords.longitude;
   var myLatLng = new google.maps.LatLng(lat, lng);
-  /*
   var mapOptions = {
-    center: myLatLng,
-    zoom: 16,
     draggable: false,
     zoomControl: false,
     scaleControl: false,
@@ -76,20 +78,41 @@ function successCallback(result) {
     disableDoubleClickZoom: true,
     mapTypeControl: false,
   }
-  */
   var map = new google.maps.Map($("#map").get(0), mapOptions);
 
-
   // Add Marker
-  var marker = new google.maps.Marker({
+  var currentMarker = new google.maps.Marker({
     position: myLatLng,
-    map: map
+    map: map,
+    title: "Current Location",
+    icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
   });
 
-  markersArray.push(maker);
+  $markersArray.push(currentMarker);
 
-  console.log(markersArray);
+  var marker, i;
+  var bounds = new google.maps.LatLngBounds();
+  for (i = 0; i < $markersArray.length; i++) {
+    marker = new google.maps.Marker({
+      position: $markersArray[i].position,
+      map: map,
+      title: $markersArray[i].title,
+      icon: $markersArray[i].icon
+    });
 
+    var infowindow = new google.maps.InfoWindow();
+
+    bounds.extend(marker.getPosition());
+
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      return function() {
+        infowindow.setContent("<b>" + $markersArray[i].title + "</b>");
+        infowindow.open(map, marker);
+      }
+    })(marker, i));
+
+  }
+  map.fitBounds(bounds);
 }
 
 function errorCallback(error) {
