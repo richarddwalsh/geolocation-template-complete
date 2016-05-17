@@ -64,7 +64,7 @@ function successCallback(result) {
   var myLatLng = new google.maps.LatLng(lat, lng);
   var mapOptions = {
     center: myLatLng,
-    zoom: 10,
+    zoom: 16,
     draggable: false,
     zoomControl: false,
     scaleControl: false,
@@ -81,9 +81,6 @@ function successCallback(result) {
     map: map
   });
 
-  // Reset Center and Zoom to Geocoded Location
-  map.setCenter(myLatLng);
-  map.setZoom(16);
 }
 
 function errorCallback(error) {
