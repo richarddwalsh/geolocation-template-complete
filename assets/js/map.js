@@ -1,4 +1,5 @@
-// center: {lat: 51.0486, lng: -114.0708},
+var markersArray = [];
+
 $(document).ready(function() {
   var marker;
   var geocoder = new google.maps.Geocoder();
@@ -26,6 +27,8 @@ $(document).ready(function() {
         position: results[0].geometry.location,
         map: map
       });
+
+      markersArray.push(marker);
 
       // Reset Center and Zoom to Geocoded Location
       map.setCenter(results[0].geometry.location);
@@ -78,11 +81,15 @@ function successCallback(result) {
 
 
   // Add Marker
-  new google.maps.Marker({
+  var marker = new google.maps.Marker({
     position: myLatLng,
     map: map
   });
-  
+
+  markersArray.push(maker);
+
+  console.log(markersArray);
+
 }
 
 function errorCallback(error) {
