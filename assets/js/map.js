@@ -83,7 +83,7 @@ function successCallback(result) {
 
   // Reset Center and Zoom to Geocoded Location
   map.setCenter(myLatLng);
-  map.setZoom(12);
+  map.setZoom(16);
 }
 
 function errorCallback(error) {
