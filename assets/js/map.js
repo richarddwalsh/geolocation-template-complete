@@ -76,13 +76,13 @@ function successCallback(result) {
   */
   var map = new google.maps.Map($("#map").get(0), mapOptions);
 
-  /*
+
   // Add Marker
   new google.maps.Marker({
     position: myLatLng,
     map: map
   });
-  */
+  
 }
 
 function errorCallback(error) {
